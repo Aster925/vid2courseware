@@ -1,0 +1,50 @@
+# ─────────────────────────────────────────────────────────────
+#  Never commit data, media, or generated study material.
+#  This repo is the TOOL. Users bring their own content.
+# ─────────────────────────────────────────────────────────────
+
+# Your private config (paths, etc.)
+config.yaml
+
+# Media
+*.mp4
+*.mkv
+*.webm
+*.mov
+*.avi
+*.mp3
+*.wav
+*.m4a
+*.flac
+
+# Pipeline artifacts & outputs
+output/
+data/
+transcripts/
+frames/
+pdf_extract/
+raw_vtt/
+manifest.json
+manifest.csv
+*.srt
+pdf_inventory.json
+
+# Models / weights caches
+*.bin
+*.pt
+*.onnx
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+*.egg-info/
+
+# OS / editor
+.DS_Store
+._*
+Thumbs.db
+.idea/
+.vscode/

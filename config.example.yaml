@@ -1,0 +1,36 @@
+# ── vid2courseware config ──────────────────────────────────────
+# Copy this file to `config.yaml` and edit. `config.yaml` is gitignored,
+# so your private paths never get committed.
+# 复制为 config.yaml 再改；config.yaml 已被 gitignore，不会泄露你的路径。
+
+# 1) Source folders holding your video files (recursed, *.mp4). One or more.
+sources:
+  - "D:/path/to/your/videos"
+  # - "E:/another/folder"
+
+# 2) Where to write all artifacts and outputs.
+output_dir: "./output"
+
+# 3) Transcription (faster-whisper)
+transcribe:
+  model: "large-v3-turbo"   # "large-v3-turbo" (~50x, recommended) | "large-v3" (slower, a touch better)
+  device: "cuda"            # "cuda" (NVIDIA GPU) | "cpu"
+  compute_type: "float16"   # "float16" for GPU | "int8" for CPU
+  multilingual: true        # detect language per segment — for mixed-language audio
+  beam_size: 5
+
+# 4) Keyframe extraction — captures on-screen slides / documents
+frames:
+  interval_sec: 10                  # sample one frame every N seconds
+  hash_threshold: 45                # Hamming-distance cutoff; higher = fewer frames kept
+  crop: [0.26, 0.28, 0.72, 0.98]    # left,top,right,bottom fractions — hash only this region
+                                    # (skip static UI chrome so scrolling text is detected)
+
+# 5) Optional: existing PDF courseware to extract & merge in. Empty = skip.
+pdf_dir: ""
+
+# 6) Optional: keyword → tag map for a rough first-pass classification of each file.
+#    Purely a convenience for sorting; the real classification is done later by an LLM.
+tags:
+  # listening: ["listening", "écoute", "听力"]
+  # reading:   ["reading", "lecture", "阅读"]

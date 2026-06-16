@@ -1,0 +1,15 @@
+# Core dependencies
+faster-whisper>=1.2      # speech-to-text (CTranslate2 backend)
+imageio-ffmpeg>=0.5      # bundled ffmpeg binary (no system install needed)
+pymupdf>=1.24            # PDF text & image extraction
+pillow>=10               # perceptual hashing for keyframe dedup
+pyyaml>=6                # config files
+
+# ── Optional: NVIDIA GPU acceleration (CUDA 12) ────────────────
+# Install these too if you have an NVIDIA GPU, for ~40-50x realtime transcription:
+#   pip install nvidia-cublas-cu12 nvidia-cudnn-cu12
+# Without a GPU, set transcribe.device: "cpu" and compute_type: "int8" in config.yaml.
+
+# ── Optional: YouTube-subtitles recipe ─────────────────────────
+# yt-dlp is invoked as a CLI; install separately:
+#   pip install yt-dlp     (or: brew install yt-dlp)
