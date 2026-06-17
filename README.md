@@ -23,6 +23,32 @@ The guiding principle throughout:
 
 See [docs/architecture.md](docs/architecture.md) for the full design rationale.
 
+## How it works
+
+```mermaid
+flowchart TD
+    subgraph SRC["1 · Sources"]
+      direction LR
+      V["Videos (.mp4)"]
+      P["PDFs"]
+    end
+    subgraph EX["2 · Extraction — cheap, automated, parallel"]
+      direction LR
+      M["manifest<br/>head+tail dedup"]
+      T["transcribe<br/>faster-whisper"]
+      F["extract_frames<br/>perceptual hash"]
+      D["pdf_extract<br/>PyMuPDF"]
+    end
+    ART["3 · Artifacts on disk<br/>manifest · transcripts · frames · pdf_extract"]
+    LLM["4 · LLM authoring<br/>classify · semantic-dedup · restore · annotate"]
+    OUT["5 · Output<br/>per-lesson courseware / consolidated guide"]
+    SRC --> EX --> ART --> LLM --> OUT
+    classDef llm fill:#f3e4db,stroke:#c2683f,stroke-width:2px,color:#3a3a3a;
+    class LLM llm;
+```
+
+*Cheap deterministic tools do the volume; the LLM does the judgment.*
+
 ## What it does
 
 - 🎞️ **Inventory + de-dup** a video corpus with a fast head+tail fingerprint (`core/manifest.py`)
@@ -98,6 +124,19 @@ instructors/creators.
 
 > 本仓库只提供工具，不含任何课程内容。视频/转写/生成的课件都已 gitignore，请勿把受版权
 > 保护的课程材料放进公开仓库。
+
+## Roadmap
+
+Ideas and help wanted — see the [issues](https://github.com/Aster925/vid2courseware/issues):
+
+- **Local OCR for keyframes** — auto-OCR captured slides (RapidOCR/PaddleOCR/Tesseract)
+  so written courseware extraction scales without manual vision passes.
+- **New recipe: burned-in subtitles** — OCR a fixed caption region for videos with
+  hardcoded subs (no caption track, no clean audio).
+- **Per-corpus language auto-config** for transcription, instead of fixed settings.
+- **Smoke tests + CI** for the `core/` modules.
+
+Contributions welcome — see [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## License
 
